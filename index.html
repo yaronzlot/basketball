@@ -18,6 +18,7 @@
       font-family: 'Heebo', sans-serif;
       direction: rtl; padding: 12px 12px 20px;
       overflow-x: hidden;
+      overflow-y: auto;
     }
 
     /* ─── LOBBY ─── */
@@ -94,7 +95,7 @@
       align-items: center; width: 100%; max-width: 420px;
     }
 
-    .game-header { text-align: center; margin-bottom: 8px; margin-top: 4px; }
+    .game-header { text-align: center; margin-bottom: 4px; margin-top: 4px; }
     .game-title {
       font-family: 'Bebas Neue', cursive; font-size: 1.6rem; color: #ff6b00;
       letter-spacing: 0.05em;
@@ -104,7 +105,7 @@
 
     /* Scoreboard — compact */
     .scoreboard {
-      display: flex; gap: 10px; width: 100%; margin-bottom: 8px;
+      display: flex; gap: 8px; width: 100%; margin-bottom: 6px;
     }
     .score-card {
       flex: 1; background: #1a1a2e; border-radius: 12px;
@@ -119,8 +120,8 @@
 
     /* Position indicator */
     .position-bar {
-      display: flex; gap: 8px; justify-content: center;
-      margin-bottom: 8px; width: 100%;
+      display: flex; gap: 6px; justify-content: center;
+      margin-bottom: 6px; width: 100%;
     }
     .pos-item {
       flex: 1; padding: 6px 4px; border-radius: 10px; text-align: center;
@@ -147,8 +148,8 @@
 
     /* Status */
     .status-area {
-      min-height: 38px; display: flex; align-items: center; justify-content: center;
-      margin-bottom: 8px;
+      min-height: 32px; display: flex; align-items: center; justify-content: center;
+      margin-bottom: 6px;
     }
     .status-pill {
       padding: 8px 18px; border-radius: 30px; font-size: 0.85rem; font-weight: 700;
@@ -168,7 +169,7 @@
     }
 
     /* ─── COURT ─── */
-    .court-wrap { width: 100%; position: relative; margin-bottom: 10px; }
+    .court-wrap { width: 100%; position: relative; margin-bottom: 6px; }
 
     canvas#court { width: 100%; border-radius: 18px; display: block; max-height: 420px; }
 
@@ -178,11 +179,17 @@
     .power-track {
       width: 100%; height: 16px; background: rgba(255,255,255,0.07);
       border-radius: 8px; overflow: hidden; border: 1px solid rgba(255,255,255,0.08);
+      position: relative;
     }
     .power-fill {
       height: 100%; width: 0%; border-radius: 8px;
-      background: linear-gradient(90deg, #2ecc71 0%, #f39c12 50%, #e74c3c 100%);
+      background: #e74c3c;
       transition: width 0.04s linear;
+    }
+    .sweet-zone {
+      position: absolute; top: 0; height: 100%; border-radius: 4px;
+      background: rgba(46,204,113,0.5); border: 1px solid #2ecc71;
+      pointer-events: none; transition: left 0.05s linear;
     }
 
     /* Shot button */
@@ -319,12 +326,12 @@
 
   <!-- Court canvas -->
   <div class="court-wrap">
-    <canvas id="court" width="400" height="380"></canvas>
+    <canvas id="court" width="400" height="300"></canvas>
   </div>
 
   <div class="power-section">
     <div class="power-label">עצמה — תפסיק בירוק!</div>
-    <div class="power-track"><div class="power-fill" id="power-fill"></div></div>
+    <div class="power-track"><div class="sweet-zone" id="sweet-zone"></div><div class="power-fill" id="power-fill"></div></div>
   </div>
 
   <button class="shot-btn" id="shot-btn"
@@ -385,6 +392,33 @@
   let power = 0;
   let chargeInterval = null;
   let shooting = false;
+  let sweetPos = 30; // current sweet zone left %
+  let sweetDir = 1;  // direction of movement
+  let sweetInterval = null;
+  const SWEET_WIDTH = 18; // zone width in %
+
+  function startSweetZone() {
+    stopSweetZone();
+    sweetPos = 10 + Math.random() * 40;
+    sweetDir = Math.random() < 0.5 ? 1 : -1;
+    const el = document.getElementById('sweet-zone');
+    if (el) { el.style.width = SWEET_WIDTH + '%'; el.style.left = sweetPos + '%'; }
+    sweetInterval = setInterval(() => {
+      sweetPos += sweetDir * 1.8;
+      if (sweetPos <= 0) { sweetPos = 0; sweetDir = 1; }
+      if (sweetPos + SWEET_WIDTH >= 100) { sweetPos = 100 - SWEET_WIDTH; sweetDir = -1; }
+      const el = document.getElementById('sweet-zone');
+      if (el) el.style.left = sweetPos + '%';
+    }, 40);
+  }
+
+  function stopSweetZone() {
+    clearInterval(sweetInterval);
+  }
+
+  function isScoredMoving(p) {
+    return p >= sweetPos && p <= sweetPos + SWEET_WIDTH;
+  }
   let localState = null;
 
   // ─── Canvas court ───
@@ -560,11 +594,15 @@
   }
 
   // ─── VS CPU ───
+  // Start sweet zone when shot button enabled
+  function activateSweetZone() { startSweetZone(); }
+
   window.startVsCpu = function() {
     vsComputer = true; myRole = 'X'; roomCode = null;
     localState = newGameState();
     show('game');
     document.getElementById('room-badge-code').textContent = 'מחשב 🤖';
+    startSweetZone();
     document.getElementById('score-name-me').textContent = 'אתה 🍓';
     document.getElementById('score-name-opp').textContent = 'מחשב 🤖';
     renderLocalGame();
@@ -600,7 +638,7 @@
     errEl.textContent = '';
     await update(ref(db, `rooms3/${code}`), { status: 'playing' });
     roomCode = code; myRole = 'O';
-    show('game'); initOnlineUI(); listenRoom();
+    show('game'); initOnlineUI(); listenRoom(); startSweetZone();
   };
 
   function listenRoom() {
@@ -659,12 +697,14 @@
     if (!isMyTurn || shooting) return;
 
     const posIdx = state.overtime ? 1 : getPosIndex(state.shots.X.length);
-    const scored = isScored(p, posIdx);
+    stopSweetZone();
+    const scored = isScoredMoving(p);
 
     shooting = true;
     showFlash(scored);
     animateShot(posIdx, scored, () => {
       shooting = false;
+      startSweetZone();
       state.shots.X.push(scored ? 1 : 0);
       const limit = state.overtime ? SHOTS_PER_POS : SHOTS_PER_POS * 3;
       if (state.shots.X.length >= limit) {
@@ -769,12 +809,14 @@
     if (myArr.length >= limit) return;
 
     const posIdx = state.overtime ? 1 : getPosIndex(myArr.length);
-    const scored = isScored(p, posIdx);
+    stopSweetZone();
+    const scored = isScoredMoving(p);
 
     shooting = true;
     showFlash(scored);
     animateShot(posIdx, scored, async () => {
       shooting = false;
+      startSweetZone();
       myArr.push(scored ? 1 : 0);
       shots[myRole] = myArr;
 
@@ -911,7 +953,7 @@
     if (unsubscribe) { unsubscribe(); unsubscribe = null; }
     if (roomCode) { await remove(ref(db, `rooms3/${roomCode}`)); roomCode = null; }
     myRole = null; vsComputer = false; localState = null;
-    charging = false; shooting = false; clearInterval(chargeInterval);
+    charging = false; shooting = false; clearInterval(chargeInterval); stopSweetZone();
     document.getElementById('lobby-err').textContent = '';
     history.replaceState({}, '', location.pathname);
     show('lobby');
@@ -929,7 +971,7 @@
     await update(ref(db, `rooms3/${roomParam}`), { status: 'playing' });
     roomCode = roomParam; myRole = 'O';
     history.replaceState({}, '', location.pathname);
-    show('game'); initOnlineUI(); listenRoom();
+    show('game'); initOnlineUI(); listenRoom(); startSweetZone();
   })();
 
   // Init court on load
