@@ -7,105 +7,78 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Heebo:wght@400;700;900&display=swap');
 
-    :root {
-      --orange: #ff6b00;
-      --orange2: #ff9a3c;
-      --dark: #0f0f1a;
-      --card: #1a1a2e;
-      --net: #e8e8e8;
-    }
-
     * { box-sizing: border-box; margin: 0; padding: 0; touch-action: manipulation; }
 
     body {
       min-height: 100vh;
-      background: var(--dark);
-      background-image:
-        radial-gradient(ellipse at 50% 0%, rgba(255,107,0,0.2) 0%, transparent 60%),
-        repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(255,255,255,0.01) 40px, rgba(255,255,255,0.01) 41px),
-        repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(255,255,255,0.01) 40px, rgba(255,255,255,0.01) 41px);
+      background: #0f0f1a;
+      background-image: radial-gradient(ellipse at 50% 0%, rgba(255,107,0,0.18) 0%, transparent 65%);
       display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
+      align-items: center; justify-content: flex-start;
       font-family: 'Heebo', sans-serif;
-      direction: rtl; padding: 16px;
+      direction: rtl; padding: 12px 12px 20px;
       overflow-x: hidden;
     }
 
     /* ─── LOBBY ─── */
     #lobby {
-      background: var(--card);
-      border-radius: 24px; padding: 36px 28px;
+      background: #1a1a2e; border-radius: 24px; padding: 36px 28px;
       border: 1px solid rgba(255,107,0,0.3);
       box-shadow: 0 0 60px rgba(255,107,0,0.15);
       text-align: center; max-width: 320px; width: 100%;
+      margin-top: 60px;
     }
     .lobby-icon { font-size: 3.5rem; margin-bottom: 8px; }
     .lobby-title {
-      font-family: 'Bebas Neue', cursive;
-      font-size: 2.4rem; color: var(--orange);
+      font-family: 'Bebas Neue', cursive; font-size: 2.4rem; color: #ff6b00;
       letter-spacing: 0.05em; margin-bottom: 4px;
       text-shadow: 0 0 30px rgba(255,107,0,0.5);
     }
     .lobby-sub { color: rgba(255,255,255,0.35); font-size: 0.8rem; margin-bottom: 28px; }
-
     .lobby-btn {
       width: 100%; padding: 15px; border-radius: 16px; border: none;
       font-size: 1rem; font-weight: 700; cursor: pointer;
       font-family: 'Heebo', sans-serif; margin-bottom: 10px;
-      transition: transform 0.15s, box-shadow 0.15s;
+      transition: transform 0.15s;
     }
     .lobby-btn:hover { transform: translateY(-2px); }
-    .btn-cpu {
-      background: linear-gradient(135deg, var(--orange), #e65000);
-      color: white; box-shadow: 0 4px 20px rgba(255,107,0,0.4);
-    }
-    .btn-friend {
-      background: rgba(255,255,255,0.07);
-      color: rgba(255,255,255,0.8);
-      border: 1px solid rgba(255,255,255,0.1);
-    }
+    .btn-cpu { background: linear-gradient(135deg, #ff6b00, #e65000); color: white; box-shadow: 0 4px 20px rgba(255,107,0,0.4); }
+    .btn-friend { background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.8); border: 1px solid rgba(255,255,255,0.1); }
     .divider { display: flex; align-items: center; gap: 10px; margin: 4px 0 14px; color: rgba(255,255,255,0.2); font-size: 0.75rem; }
     .divider::before, .divider::after { content:''; flex:1; height:1px; background:rgba(255,255,255,0.08); }
     .code-input {
       width: 100%; padding: 13px; border-radius: 14px;
-      border: 2px solid rgba(255,107,0,0.3);
-      background: rgba(255,255,255,0.05);
+      border: 2px solid rgba(255,107,0,0.3); background: rgba(255,255,255,0.05);
       font-size: 1.4rem; font-weight: 700; text-align: center;
       letter-spacing: 0.2em; font-family: 'Heebo', sans-serif;
       outline: none; direction: ltr; color: white; margin-bottom: 10px;
-      transition: border-color 0.15s;
     }
-    .code-input:focus { border-color: var(--orange); }
+    .code-input:focus { border-color: #ff6b00; }
     .code-input::placeholder { font-size: 0.9rem; letter-spacing: 0.05em; color: rgba(255,255,255,0.2); }
     .btn-join {
-      width: 100%; background: linear-gradient(135deg, var(--orange2), var(--orange));
+      width: 100%; background: linear-gradient(135deg, #ff9a3c, #ff6b00);
       color: white; border: none; border-radius: 14px;
       padding: 13px; font-size: 1rem; font-weight: 700;
       cursor: pointer; font-family: 'Heebo', sans-serif;
-      box-shadow: 0 4px 16px rgba(255,107,0,0.3);
-      transition: transform 0.15s;
     }
-    .btn-join:hover { transform: translateY(-2px); }
     #lobby-err { color: #ff6b6b; font-size: 0.8rem; margin-top: 8px; min-height: 18px; }
 
     /* ─── WAITING ─── */
     #waiting {
-      background: var(--card); border-radius: 24px; padding: 36px 28px;
-      border: 1px solid rgba(255,107,0,0.3);
-      box-shadow: 0 0 60px rgba(255,107,0,0.15);
-      text-align: center; max-width: 320px; width: 100%; display: none;
+      background: #1a1a2e; border-radius: 24px; padding: 36px 28px;
+      border: 1px solid rgba(255,107,0,0.3); text-align: center;
+      max-width: 320px; width: 100%; display: none; margin-top: 60px;
     }
     #waiting h2 { color: white; font-size: 1.1rem; margin-bottom: 8px; }
     .waiting-hint { color: rgba(255,255,255,0.35); font-size: 0.82rem; }
     .room-code-big {
-      font-family: 'Bebas Neue', cursive;
-      font-size: 4rem; color: var(--orange); direction: ltr;
-      margin: 12px 0; text-shadow: 0 0 40px rgba(255,107,0,0.6);
+      font-family: 'Bebas Neue', cursive; font-size: 4rem; color: #ff6b00;
+      direction: ltr; margin: 12px 0; text-shadow: 0 0 40px rgba(255,107,0,0.6);
       letter-spacing: 0.1em;
     }
     .spinner {
       width: 32px; height: 32px; border: 3px solid rgba(255,107,0,0.2);
-      border-top-color: var(--orange); border-radius: 50%;
+      border-top-color: #ff6b00; border-radius: 50%;
       animation: spin 0.8s linear infinite; margin: 16px auto 0;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
@@ -116,160 +89,126 @@
     }
 
     /* ─── GAME ─── */
-    #game { display: none; flex-direction: column; align-items: center; width: 100%; max-width: 400px; }
+    #game {
+      display: none; flex-direction: column;
+      align-items: center; width: 100%; max-width: 420px;
+    }
 
-    .game-header { text-align: center; margin-bottom: 12px; }
+    .game-header { text-align: center; margin-bottom: 8px; margin-top: 4px; }
     .game-title {
-      font-family: 'Bebas Neue', cursive;
-      font-size: 1.8rem; color: var(--orange);
+      font-family: 'Bebas Neue', cursive; font-size: 1.6rem; color: #ff6b00;
       letter-spacing: 0.05em;
     }
-    .room-badge { font-size: 0.7rem; color: rgba(255,255,255,0.25); }
-    .room-badge span { color: var(--orange); font-weight: 700; }
+    .room-badge { font-size: 0.65rem; color: rgba(255,255,255,0.25); }
+    .room-badge span { color: #ff6b00; }
 
-    /* Scoreboard */
+    /* Scoreboard — compact */
     .scoreboard {
-      display: flex; gap: 12px; width: 100%; margin-bottom: 14px;
+      display: flex; gap: 10px; width: 100%; margin-bottom: 8px;
     }
     .score-card {
-      flex: 1; background: var(--card); border-radius: 16px;
-      padding: 12px 8px; text-align: center;
+      flex: 1; background: #1a1a2e; border-radius: 14px;
+      padding: 8px 6px; text-align: center;
       border: 1px solid rgba(255,255,255,0.06);
       transition: border-color 0.3s;
     }
-    .score-card.active { border-color: var(--orange); box-shadow: 0 0 16px rgba(255,107,0,0.2); }
-    .score-name { font-size: 0.65rem; color: rgba(255,255,255,0.4); margin-bottom: 2px; }
-    .score-pts {
-      font-family: 'Bebas Neue', cursive;
-      font-size: 2.2rem; color: white; line-height: 1;
-    }
-    .score-shots { font-size: 0.6rem; color: rgba(255,255,255,0.3); margin-top: 2px; }
+    .score-card.active { border-color: #ff6b00; box-shadow: 0 0 12px rgba(255,107,0,0.2); }
+    .score-name { font-size: 0.6rem; color: rgba(255,255,255,0.4); margin-bottom: 1px; }
+    .score-pts { font-family: 'Bebas Neue', cursive; font-size: 1.8rem; color: white; line-height: 1; }
+    .score-shots { font-size: 0.55rem; color: rgba(255,255,255,0.3); margin-top: 1px; }
 
-    /* Phase label */
-    .phase-label {
-      font-size: 0.75rem; color: rgba(255,255,255,0.4);
-      margin-bottom: 10px; text-align: center; min-height: 18px;
+    /* Position indicator */
+    .position-bar {
+      display: flex; gap: 8px; justify-content: center;
+      margin-bottom: 8px; width: 100%;
     }
+    .pos-item {
+      flex: 1; padding: 6px 4px; border-radius: 10px; text-align: center;
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+      font-size: 0.65rem; color: rgba(255,255,255,0.3); transition: all 0.3s;
+    }
+    .pos-item.active {
+      background: rgba(255,107,0,0.15); border-color: #ff6b00;
+      color: #ff6b00; font-weight: 700;
+    }
+    .pos-item.done {
+      background: rgba(46,204,113,0.1); border-color: rgba(46,204,113,0.4);
+      color: rgba(46,204,113,0.7);
+    }
+    .pos-label { font-size: 0.75rem; margin-bottom: 2px; }
+    .pos-dots { display: flex; gap: 3px; justify-content: center; }
+    .pos-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.2); background: transparent;
+    }
+    .pos-dot.in { background: #2ecc71; border-color: #2ecc71; }
+    .pos-dot.out { background: #e74c3c; border-color: #e74c3c; }
+    .pos-dot.cur { border-color: #ff6b00; box-shadow: 0 0 6px rgba(255,107,0,0.6); }
 
-    /* Court */
-    .court {
-      width: 100%; max-width: 360px;
-      background: #1a3a1a;
-      border-radius: 20px; padding: 16px;
-      border: 2px solid rgba(255,107,0,0.2);
-      box-shadow: 0 8px 40px rgba(0,0,0,0.5);
-      margin-bottom: 16px; position: relative;
-      overflow: hidden;
+    /* Status */
+    .status-area {
+      min-height: 38px; display: flex; align-items: center; justify-content: center;
+      margin-bottom: 8px;
     }
-    .court::before {
-      content: '';
-      position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
-      width: 180px; height: 90px;
-      border: 2px solid rgba(255,255,255,0.08);
-      border-bottom: none; border-radius: 90px 90px 0 0;
+    .status-pill {
+      padding: 8px 18px; border-radius: 30px; font-size: 0.85rem; font-weight: 700;
+      background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.8);
+      border: 1px solid rgba(255,255,255,0.1);
     }
-
-    /* Hoop */
-    .hoop-area {
-      display: flex; flex-direction: column; align-items: center;
-      margin-bottom: 20px; position: relative;
+    .status-win {
+      padding: 10px 24px; border-radius: 30px; font-size: 0.95rem; font-weight: 800;
+      background: linear-gradient(135deg, #ff6b00, #e65000); color: white;
+      box-shadow: 0 4px 20px rgba(255,107,0,0.4);
+      animation: pop 0.4s cubic-bezier(.36,2,.4,.8);
     }
-    .backboard {
-      width: 80px; height: 14px;
-      background: rgba(255,255,255,0.15);
-      border: 2px solid rgba(255,255,255,0.3);
-      border-radius: 4px; margin-bottom: 2px;
-    }
-    .rim {
-      width: 54px; height: 8px;
-      background: var(--orange);
-      border-radius: 4px;
-      box-shadow: 0 0 12px rgba(255,107,0,0.6);
-      position: relative;
-    }
-    .net {
-      width: 44px; height: 28px;
-      background: repeating-linear-gradient(
-        to bottom,
-        transparent 0px, transparent 6px,
-        rgba(232,232,232,0.3) 6px, rgba(232,232,232,0.3) 7px
-      ),
-      repeating-linear-gradient(
-        to right,
-        transparent 0px, transparent 10px,
-        rgba(232,232,232,0.25) 10px, rgba(232,232,232,0.25) 11px
-      );
-      border-left: 1px solid rgba(232,232,232,0.3);
-      border-right: 1px solid rgba(232,232,232,0.3);
-      clip-path: polygon(0 0, 100% 0, 85% 100%, 15% 100%);
+    .status-lose {
+      padding: 10px 24px; border-radius: 30px; font-size: 0.95rem; font-weight: 800;
+      background: linear-gradient(135deg, #e74c3c, #c0392b); color: white;
+      animation: pop 0.4s cubic-bezier(.36,2,.4,.8);
     }
 
-    /* Ball */
-    .ball-area { display: flex; justify-content: center; margin: 10px 0 16px; position: relative; height: 70px; }
-    .ball {
-      width: 60px; height: 60px; border-radius: 50%;
-      background: radial-gradient(circle at 35% 35%, #ff8c42, #e65000, #8b2500);
-      box-shadow: 0 4px 20px rgba(0,0,0,0.5), inset -4px -4px 8px rgba(0,0,0,0.3);
-      position: relative; cursor: pointer;
-      transition: transform 0.1s;
-      align-self: flex-end;
-    }
-    .ball::before {
-      content: '';
-      position: absolute; top: 50%; left: 0; right: 0; height: 2px;
-      background: rgba(0,0,0,0.3); transform: translateY(-50%);
-      border-radius: 50%;
-    }
-    .ball::after {
-      content: '';
-      position: absolute; left: 50%; top: 0; bottom: 0; width: 2px;
-      background: rgba(0,0,0,0.3); transform: translateX(-50%);
-      border-radius: 50%;
-    }
-    .ball.shooting { animation: shootBall 0.7s ease-out forwards; }
-    .ball.missed  { animation: missBall 0.7s ease-in forwards; }
+    /* ─── COURT ─── */
+    .court-wrap { width: 100%; position: relative; margin-bottom: 10px; }
 
-    @keyframes shootBall {
-      0%   { transform: translateY(0) scale(1); opacity: 1; }
-      40%  { transform: translateY(-140px) scale(0.7); opacity: 1; }
-      70%  { transform: translateY(-160px) translateX(10px) scale(0.5); opacity: 1; }
-      100% { transform: translateY(-80px) scale(0.3); opacity: 0; }
-    }
-    @keyframes missBall {
-      0%   { transform: translateY(0) scale(1); }
-      30%  { transform: translateY(-80px) scale(0.8); }
-      100% { transform: translateY(20px) scale(0.9); opacity: 0; }
-    }
+    canvas#court { width: 100%; border-radius: 18px; display: block; }
 
     /* Power bar */
     .power-section { width: 100%; margin-bottom: 8px; }
-    .power-label { font-size: 0.7rem; color: rgba(255,255,255,0.4); text-align: center; margin-bottom: 6px; }
+    .power-label { font-size: 0.65rem; color: rgba(255,255,255,0.35); text-align: center; margin-bottom: 4px; }
     .power-track {
-      width: 100%; height: 18px; background: rgba(255,255,255,0.07);
-      border-radius: 9px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1);
+      width: 100%; height: 16px; background: rgba(255,255,255,0.07);
+      border-radius: 8px; overflow: hidden; border: 1px solid rgba(255,255,255,0.08);
     }
     .power-fill {
-      height: 100%; width: 0%; border-radius: 9px;
-      background: linear-gradient(90deg, #2ecc71, #f39c12, #e74c3c);
-      transition: width 0.05s linear;
+      height: 100%; width: 0%; border-radius: 8px;
+      background: linear-gradient(90deg, #2ecc71 0%, #f39c12 50%, #e74c3c 100%);
+      transition: width 0.04s linear;
     }
 
     /* Shot button */
     .shot-btn {
       width: 100%; padding: 16px; border-radius: 18px; border: none;
-      font-family: 'Bebas Neue', cursive; font-size: 1.6rem;
-      letter-spacing: 0.05em; cursor: pointer;
-      background: linear-gradient(135deg, var(--orange), #e65000);
+      font-family: 'Bebas Neue', cursive; font-size: 1.6rem; letter-spacing: 0.05em;
+      cursor: pointer; background: linear-gradient(135deg, #ff6b00, #e65000);
       color: white; box-shadow: 0 4px 24px rgba(255,107,0,0.4);
-      transition: transform 0.1s, box-shadow 0.1s;
-      user-select: none; -webkit-user-select: none;
+      transition: transform 0.1s; user-select: none; -webkit-user-select: none;
+      margin-bottom: 8px;
     }
-    .shot-btn:active { transform: scale(0.97); box-shadow: 0 2px 12px rgba(255,107,0,0.3); }
-    .shot-btn:disabled { opacity: 0.4; cursor: default; }
+    .shot-btn:active { transform: scale(0.97); }
+    .shot-btn:disabled { opacity: 0.35; cursor: default; }
+
+    .next-btn {
+      width: 100%; padding: 13px; border-radius: 16px; border: none;
+      font-family: 'Bebas Neue', cursive; font-size: 1.3rem; letter-spacing: 0.05em;
+      background: rgba(255,255,255,0.08); color: white; cursor: pointer;
+      border: 1px solid rgba(255,255,255,0.12); margin-bottom: 8px;
+      transition: transform 0.15s;
+    }
+    .next-btn:hover { transform: translateY(-2px); }
 
     /* Result flash */
     .result-flash {
-      position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      position: fixed; top: 40%; left: 50%; transform: translate(-50%, -50%);
       font-family: 'Bebas Neue', cursive; font-size: 4rem;
       pointer-events: none; z-index: 100;
       animation: flashResult 1s ease-out forwards;
@@ -277,51 +216,17 @@
     .result-flash.scored { color: #2ecc71; text-shadow: 0 0 30px rgba(46,204,113,0.8); }
     .result-flash.missed-txt { color: #e74c3c; text-shadow: 0 0 30px rgba(231,76,60,0.8); }
     @keyframes flashResult {
-      0%   { opacity: 1; transform: translate(-50%, -50%) scale(0.5); }
-      40%  { opacity: 1; transform: translate(-50%, -60%) scale(1.1); }
-      100% { opacity: 0; transform: translate(-50%, -80%) scale(0.8); }
+      0%   { opacity: 1; transform: translate(-50%,-50%) scale(0.5); }
+      40%  { opacity: 1; transform: translate(-50%,-65%) scale(1.2); }
+      100% { opacity: 0; transform: translate(-50%,-90%) scale(0.8); }
     }
 
-    /* Status */
-    .status-area {
-      min-height: 48px; display: flex; align-items: center; justify-content: center;
-      margin-bottom: 12px;
-    }
-    .status-pill {
-      padding: 10px 20px; border-radius: 30px; font-size: 0.9rem; font-weight: 700;
-      background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.8);
-      border: 1px solid rgba(255,255,255,0.1);
-    }
-    .status-win {
-      padding: 12px 28px; border-radius: 30px; font-size: 1rem; font-weight: 800;
-      background: linear-gradient(135deg, var(--orange), #e65000);
-      color: white; box-shadow: 0 4px 20px rgba(255,107,0,0.4);
-      animation: pop 0.4s cubic-bezier(.36,2,.4,.8);
-    }
-    .status-lose {
-      padding: 12px 28px; border-radius: 30px; font-size: 1rem; font-weight: 800;
-      background: linear-gradient(135deg, #e74c3c, #c0392b);
-      color: white; box-shadow: 0 4px 20px rgba(231,76,60,0.4);
-      animation: pop 0.4s cubic-bezier(.36,2,.4,.8);
-    }
-
-    /* Next btn */
-    .next-btn {
-      width: 100%; padding: 14px; border-radius: 18px; border: none;
-      font-family: 'Bebas Neue', cursive; font-size: 1.4rem; letter-spacing: 0.05em;
-      background: rgba(255,255,255,0.08); color: white; cursor: pointer;
-      border: 1px solid rgba(255,255,255,0.12); margin-bottom: 10px;
-      transition: transform 0.15s, background 0.15s;
-    }
-    .next-btn:hover { background: rgba(255,255,255,0.13); transform: translateY(-2px); }
-
-    /* Emoji bar */
-    .emoji-bar { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; margin-bottom: 10px; }
+    /* Emoji */
+    .emoji-bar { display: flex; gap: 5px; justify-content: center; flex-wrap: wrap; margin-bottom: 8px; }
     .emoji-btn {
-      width: 38px; height: 38px; border-radius: 50%;
+      width: 36px; height: 36px; border-radius: 50%;
       border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.04);
-      font-size: 1.1rem; cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center;
       transition: transform 0.15s;
     }
     .emoji-btn:hover { transform: scale(1.2); }
@@ -332,27 +237,15 @@
     .emoji-bubble.mine { right: 30px; }
     .emoji-bubble.theirs { left: 30px; }
     @keyframes bubbleUp {
-      0%   { opacity: 1; transform: translateY(0) scale(1); }
-      80%  { opacity: 1; transform: translateY(-120px) scale(1.3); }
-      100% { opacity: 0; transform: translateY(-160px) scale(0.8); }
+      0%   { opacity:1; transform:translateY(0) scale(1); }
+      80%  { opacity:1; transform:translateY(-120px) scale(1.3); }
+      100% { opacity:0; transform:translateY(-160px) scale(0.8); }
     }
-
     @keyframes pop {
-      0% { transform: scale(0.7); opacity: 0; }
-      70% { transform: scale(1.1); }
-      100% { transform: scale(1); opacity: 1; }
+      0% { transform:scale(0.7); opacity:0; }
+      70% { transform:scale(1.1); }
+      100% { transform:scale(1); opacity:1; }
     }
-
-    /* Shots dots */
-    .shots-dots { display: flex; gap: 6px; justify-content: center; margin-bottom: 10px; flex-wrap: wrap; }
-    .dot {
-      width: 14px; height: 14px; border-radius: 50%;
-      border: 2px solid rgba(255,255,255,0.2); background: transparent;
-      transition: all 0.2s;
-    }
-    .dot.scored { background: #2ecc71; border-color: #2ecc71; box-shadow: 0 0 8px rgba(46,204,113,0.5); }
-    .dot.missed { background: #e74c3c; border-color: #e74c3c; }
-    .dot.current { border-color: var(--orange); box-shadow: 0 0 8px rgba(255,107,0,0.5); }
   </style>
 </head>
 <body>
@@ -361,7 +254,7 @@
 <div id="lobby">
   <div class="lobby-icon">🏀</div>
   <div class="lobby-title">קליעות מהשלוש</div>
-  <div class="lobby-sub">6 זריקות לכל שחקן</div>
+  <div class="lobby-sub">3 עמדות × 3 זריקות = 9 סה"כ</div>
   <button class="lobby-btn btn-cpu" onclick="startVsCpu()">🤖 שחק נגד המחשב</button>
   <button class="lobby-btn btn-friend" onclick="startVsFriend()">🤝 צרף חבר</button>
   <div class="divider">יש לך קוד?</div>
@@ -391,33 +284,47 @@
     <div class="score-card" id="score-card-me">
       <div class="score-name" id="score-name-me">אתה</div>
       <div class="score-pts" id="score-me">0</div>
-      <div class="score-shots" id="shots-me"></div>
+      <div class="score-shots" id="shots-me">0/9</div>
     </div>
     <div class="score-card" id="score-card-opp">
       <div class="score-name" id="score-name-opp">יריב</div>
       <div class="score-pts" id="score-opp">0</div>
-      <div class="score-shots" id="shots-opp"></div>
+      <div class="score-shots" id="shots-opp">0/9</div>
     </div>
   </div>
 
-  <div class="phase-label" id="phase-label"></div>
+  <!-- Position bar -->
+  <div class="position-bar" id="position-bar">
+    <div class="pos-item" id="pos-0">
+      <div class="pos-label">◀ שמאל</div>
+      <div class="pos-dots" id="dots-0">
+        <div class="pos-dot"></div><div class="pos-dot"></div><div class="pos-dot"></div>
+      </div>
+    </div>
+    <div class="pos-item" id="pos-1">
+      <div class="pos-label">▲ מרכז</div>
+      <div class="pos-dots" id="dots-1">
+        <div class="pos-dot"></div><div class="pos-dot"></div><div class="pos-dot"></div>
+      </div>
+    </div>
+    <div class="pos-item" id="pos-2">
+      <div class="pos-label">▶ ימין</div>
+      <div class="pos-dots" id="dots-2">
+        <div class="pos-dot"></div><div class="pos-dot"></div><div class="pos-dot"></div>
+      </div>
+    </div>
+  </div>
+
   <div class="status-area" id="status-area"></div>
 
-  <div class="shots-dots" id="shots-dots"></div>
+  <!-- Court canvas -->
+  <div class="court-wrap">
+    <canvas id="court" width="400" height="320"></canvas>
+  </div>
 
-  <div class="court">
-    <div class="hoop-area">
-      <div class="backboard"></div>
-      <div class="rim"></div>
-      <div class="net"></div>
-    </div>
-    <div class="ball-area">
-      <div class="ball" id="ball"></div>
-    </div>
-    <div class="power-section">
-      <div class="power-label">עצמה</div>
-      <div class="power-track"><div class="power-fill" id="power-fill"></div></div>
-    </div>
+  <div class="power-section">
+    <div class="power-label">עצמה — תפסיק בירוק!</div>
+    <div class="power-track"><div class="power-fill" id="power-fill"></div></div>
   </div>
 
   <button class="shot-btn" id="shot-btn"
@@ -459,25 +366,178 @@
   const app = initializeApp(firebaseConfig);
   const db = getDatabase(app);
 
-  const TOTAL_SHOTS = 6;
-  const OVERTIME_SHOTS = 3;
-  // Sweet zone: power 35%-70% = score
-  const SWEET_MIN = 32, SWEET_MAX = 72;
+  const SHOTS_PER_POS = 3;
+  const POSITIONS = ['שמאל','מרכז','ימין'];
+  const SWEET_MIN = 33, SWEET_MAX = 70;
+  // Difficulty per position: center easiest, sides harder
+  const POS_SWEET = [
+    { min: 38, max: 65 }, // left — slightly harder
+    { min: 33, max: 70 }, // center — easiest
+    { min: 38, max: 65 }, // right — slightly harder
+  ];
 
-  let myRole = null; // 'X' or 'O'
+  let myRole = null;
   let roomCode = null;
   let unsubscribe = null;
   let lastEmojiTs = 0;
   let vsComputer = false;
-
-  // Local state
   let charging = false;
   let power = 0;
   let chargeInterval = null;
   let shooting = false;
-  let localState = null; // for vs CPU
+  let localState = null;
 
-  function randomCode() { return Math.floor(1000 + Math.random() * 9000).toString(); }
+  // ─── Canvas court ───
+  const canvas = document.getElementById('court');
+  const ctx = canvas.getContext('2d');
+  let ballAnim = null;
+  let ballX = 200, ballY = 240, ballSize = 28;
+  let currentPos = 0; // 0=left,1=center,2=right
+
+  const BALL_START_X = [100, 200, 300];
+  const BALL_START_Y = 260;
+
+  function drawCourt(posIdx, animBall) {
+    const W = canvas.width, H = canvas.height;
+    ctx.clearRect(0, 0, W, H);
+
+    // Floor
+    const floorGrad = ctx.createLinearGradient(0, 0, 0, H);
+    floorGrad.addColorStop(0, '#1a4a1a');
+    floorGrad.addColorStop(1, '#0d2e0d');
+    ctx.fillStyle = floorGrad;
+    ctx.roundRect(0, 0, W, H, 18);
+    ctx.fill();
+
+    // Court lines
+    ctx.strokeStyle = 'rgba(255,255,255,0.12)';
+    ctx.lineWidth = 1.5;
+
+    // Half circle (3-point arc) — correct orientation, opening facing DOWN
+    ctx.beginPath();
+    ctx.arc(W/2, 10, 200, 0.1 * Math.PI, 0.9 * Math.PI);
+    ctx.stroke();
+
+    // Side lines
+    ctx.beginPath();
+    ctx.moveTo(20, 0); ctx.lineTo(20, H * 0.6);
+    ctx.moveTo(W-20, 0); ctx.lineTo(W-20, H * 0.6);
+    ctx.stroke();
+
+    // Paint (key)
+    ctx.strokeStyle = 'rgba(255,255,255,0.15)';
+    ctx.strokeRect(W/2 - 50, 0, 100, 100);
+
+    // Backboard
+    ctx.fillStyle = 'rgba(255,255,255,0.25)';
+    ctx.fillRect(W/2 - 40, 8, 80, 10);
+
+    // Rim
+    ctx.strokeStyle = '#ff6b00';
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+    ctx.ellipse(W/2, 50, 24, 8, 0, 0, Math.PI * 2);
+    ctx.stroke();
+
+    // Net
+    ctx.strokeStyle = 'rgba(220,220,220,0.4)';
+    ctx.lineWidth = 1;
+    for (let i = 0; i <= 4; i++) {
+      ctx.beginPath();
+      const x1 = W/2 - 22 + i * 11;
+      const x2 = W/2 - 14 + i * 7;
+      ctx.moveTo(x1, 54); ctx.lineTo(x2, 80);
+      ctx.stroke();
+    }
+    for (let j = 0; j < 3; j++) {
+      ctx.beginPath();
+      ctx.moveTo(W/2 - 22 + j * 0, 54 + j * 8);
+      ctx.lineTo(W/2 + 22 - j * 0, 54 + j * 8);
+      ctx.stroke();
+    }
+
+    // Position markers on 3-point line
+    const posAngles = [0.75 * Math.PI, 0.5 * Math.PI, 0.25 * Math.PI];
+    posAngles.forEach((angle, i) => {
+      const px = W/2 + 200 * Math.cos(angle);
+      const py = 10 + 200 * Math.sin(angle);
+      ctx.beginPath();
+      ctx.arc(px, py, 7, 0, Math.PI * 2);
+      ctx.fillStyle = i === posIdx ? '#ff6b00' : 'rgba(255,255,255,0.2)';
+      ctx.fill();
+      if (i === posIdx) {
+        ctx.strokeStyle = '#ff9a3c';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+      }
+    });
+
+    // Ball
+    if (animBall) {
+      drawBall(ballX, ballY, ballSize);
+    } else {
+      const bx = BALL_START_X[posIdx];
+      drawBall(bx, BALL_START_Y, 28);
+    }
+  }
+
+  function drawBall(x, y, size) {
+    const grad = ctx.createRadialGradient(x - size*0.3, y - size*0.3, size*0.1, x, y, size);
+    grad.addColorStop(0, '#ff9a3c');
+    grad.addColorStop(0.6, '#e65000');
+    grad.addColorStop(1, '#7a2200');
+    ctx.beginPath();
+    ctx.arc(x, y, size, 0, Math.PI * 2);
+    ctx.fillStyle = grad;
+    ctx.fill();
+    // Lines
+    ctx.strokeStyle = 'rgba(0,0,0,0.35)';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(x - size, y); ctx.lineTo(x + size, y);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(x, y - size); ctx.lineTo(x, y + size);
+    ctx.stroke();
+  }
+
+  function animateShot(posIdx, scored, cb) {
+    if (ballAnim) cancelAnimationFrame(ballAnim);
+    const startX = BALL_START_X[posIdx];
+    const startY = BALL_START_Y;
+    const rimX = canvas.width / 2;
+    const rimY = 50;
+    let t = 0;
+
+    const animate = () => {
+      t += 0.035;
+      if (t >= 1) {
+        drawCourt(posIdx, false);
+        if (cb) cb();
+        return;
+      }
+      const x = startX + (rimX - startX) * t;
+      const arc = Math.sin(t * Math.PI) * 160;
+      const y = startY + (rimY - startY) * t - arc;
+      const size = 28 - t * 10;
+      ballX = x; ballY = y; ballSize = size;
+
+      if (scored && t > 0.85) {
+        // Ball goes through net
+        drawCourt(posIdx, true);
+      } else if (!scored && t > 0.7) {
+        // Ball bounces away
+        const bx = rimX + (startX < rimX ? -60 : 60) * (t - 0.7) * 3;
+        const by = rimY + 80 * (t - 0.7) * 3;
+        drawCourt(posIdx, false);
+        drawBall(bx, by, size);
+      } else {
+        drawCourt(posIdx, true);
+      }
+      ballAnim = requestAnimationFrame(animate);
+    };
+    animate();
+  }
 
   function show(id) {
     ['lobby','waiting','game'].forEach(s => {
@@ -488,18 +548,20 @@
 
   function newGameState() {
     return {
-      status: 'playing',
-      phase: 'X_shooting', // X_shooting, O_shooting, overtime_X, overtime_O, done
+      phase: 'X_shooting',
       shots: { X: [], O: [] },
       overtime: false,
     };
   }
 
-  // ─── VS COMPUTER ───
+  function isScored(p, posIdx) {
+    const sw = POS_SWEET[posIdx];
+    return p >= sw.min && p <= sw.max;
+  }
+
+  // ─── VS CPU ───
   window.startVsCpu = function() {
-    vsComputer = true;
-    myRole = 'X';
-    roomCode = null;
+    vsComputer = true; myRole = 'X'; roomCode = null;
     localState = newGameState();
     show('game');
     document.getElementById('room-badge-code').textContent = 'מחשב 🤖';
@@ -512,26 +574,20 @@
   window.startVsFriend = async function() {
     let code;
     for (let i = 0; i < 10; i++) {
-      code = randomCode();
+      code = Math.floor(1000 + Math.random() * 9000).toString();
       const snap = await get(ref(db, `rooms3/${code}`));
       if (!snap.exists()) break;
     }
     const state = newGameState();
     await set(ref(db, `rooms3/${code}`), { status: 'waiting', game: state, emoji: null });
-    roomCode = code;
-    myRole = 'X';
+    roomCode = code; myRole = 'X';
     document.getElementById('display-code').textContent = code;
     show('waiting');
     listenRoom();
-
     const url = `${location.origin}${location.pathname}?room=${code}`;
-    const text = `בוא נשחק קליעות מהשלוש! לחץ להצטרף: ${url}`;
-    if (navigator.share) {
-      try { await navigator.share({ title: 'קליעות מהשלוש', text }); } catch(e) {}
-    } else {
-      await navigator.clipboard.writeText(text).catch(()=>{});
-      alert('הלינק הועתק 📋');
-    }
+    const text = `בוא נשחק קליעות מהשלוש! ${url}`;
+    if (navigator.share) { try { await navigator.share({ title: 'קליעות', text }); } catch(e){} }
+    else { await navigator.clipboard.writeText(text).catch(()=>{}); alert('הלינק הועתק 📋'); }
   };
 
   window.joinRoom = async function() {
@@ -543,11 +599,8 @@
     if (snap.val().status !== 'waiting') { errEl.textContent = 'החדר כבר מלא'; return; }
     errEl.textContent = '';
     await update(ref(db, `rooms3/${code}`), { status: 'playing' });
-    roomCode = code;
-    myRole = 'O';
-    show('game');
-    initOnlineUI();
-    listenRoom();
+    roomCode = code; myRole = 'O';
+    show('game'); initOnlineUI(); listenRoom();
   };
 
   function listenRoom() {
@@ -556,8 +609,7 @@
       if (!snap.exists()) { leaveRoom(); return; }
       const data = snap.val();
       if (myRole === 'X' && data.status === 'playing' && document.getElementById('waiting').style.display !== 'none') {
-        show('game');
-        initOnlineUI();
+        show('game'); initOnlineUI();
       }
       if (document.getElementById('game').style.display !== 'none') {
         renderOnlineGame(data.game || newGameState());
@@ -568,26 +620,16 @@
 
   function initOnlineUI() {
     document.getElementById('room-badge-code').textContent = roomCode;
-    document.getElementById('score-name-me').textContent = myRole === 'X' ? 'אתה 🍓 (ראשון)' : 'אתה 🍋 (שני)';
+    document.getElementById('score-name-me').textContent = myRole === 'X' ? 'אתה 🍓' : 'אתה 🍋';
     document.getElementById('score-name-opp').textContent = myRole === 'X' ? 'יריב 🍋' : 'יריב 🍓';
   }
 
-  // ─── SHOOTING MECHANICS ───
+  // ─── SHOOTING ───
   window.startCharge = function(e) {
     if (e) e.preventDefault();
     if (shooting) return;
-    const state = vsComputer ? localState : null;
-    const phase = state ? state.phase : null;
-
-    // Check if it's my turn
-    if (!vsComputer) {
-      // Will be checked in releaseShot via current game state
-    }
-
-    charging = true;
-    power = 0;
+    charging = true; power = 0;
     document.getElementById('power-fill').style.width = '0%';
-
     chargeInterval = setInterval(() => {
       if (!charging) return;
       power = Math.min(power + 2.5, 100);
@@ -598,40 +640,37 @@
   window.releaseShot = function(e) {
     if (e) e.preventDefault();
     if (!charging) return;
-    charging = false;
-    clearInterval(chargeInterval);
-    const finalPower = power;
-    power = 0;
+    charging = false; clearInterval(chargeInterval);
+    const p = power; power = 0;
     document.getElementById('power-fill').style.width = '0%';
-
-    if (vsComputer) {
-      doLocalShot(finalPower);
-    } else {
-      doOnlineShot(finalPower);
-    }
+    if (vsComputer) doLocalShot(p);
+    else doOnlineShot(p);
   };
 
-  function isScored(p) {
-    return p >= SWEET_MIN && p <= SWEET_MAX;
+  function getPosIndex(shots) {
+    return Math.min(Math.floor(shots / SHOTS_PER_POS), 2);
   }
 
-  // ─── LOCAL (VS CPU) ───
+  // ─── LOCAL ───
   function doLocalShot(p) {
     const state = localState;
     if (!state || state.phase === 'done') return;
     const isMyTurn = state.phase === 'X_shooting' || state.phase === 'overtime_X';
-    if (!isMyTurn) return;
+    if (!isMyTurn || shooting) return;
 
-    const scored = isScored(p);
-    animateBall(scored, () => {
+    const posIdx = state.overtime ? 1 : getPosIndex(state.shots.X.length);
+    const scored = isScored(p, posIdx);
+
+    shooting = true;
+    showFlash(scored);
+    animateShot(posIdx, scored, () => {
+      shooting = false;
       state.shots.X.push(scored ? 1 : 0);
-      const limit = state.overtime ? OVERTIME_SHOTS : TOTAL_SHOTS;
-
+      const limit = state.overtime ? SHOTS_PER_POS : SHOTS_PER_POS * 3;
       if (state.shots.X.length >= limit) {
-        // CPU's turn
         state.phase = state.overtime ? 'overtime_O' : 'O_shooting';
         renderLocalGame();
-        setTimeout(cpuShoot, 1000);
+        setTimeout(cpuShoot, 800);
       } else {
         renderLocalGame();
       }
@@ -641,23 +680,21 @@
   function cpuShoot() {
     const state = localState;
     if (!state) return;
-    const limit = state.overtime ? OVERTIME_SHOTS : TOTAL_SHOTS;
+    const limit = state.overtime ? SHOTS_PER_POS : SHOTS_PER_POS * 3;
 
     const doOne = () => {
-      if (state.shots.O.length >= limit) {
-        checkLocalWinner();
-        return;
-      }
-      // CPU has ~55% hit rate
-      const cpuPower = Math.random() < 0.55
-        ? SWEET_MIN + Math.random() * (SWEET_MAX - SWEET_MIN)
-        : (Math.random() < 0.5 ? Math.random() * SWEET_MIN : SWEET_MAX + Math.random() * (100 - SWEET_MAX));
-      const scored = isScored(cpuPower);
-      animateBall(scored, () => {
+      if (state.shots.O.length >= limit) { setTimeout(checkLocalWinner, 300); return; }
+      const posIdx = state.overtime ? 1 : getPosIndex(state.shots.O.length);
+      const sw = POS_SWEET[posIdx];
+      const cpuP = Math.random() < 0.50
+        ? sw.min + Math.random() * (sw.max - sw.min)
+        : (Math.random() < 0.5 ? Math.random() * sw.min : sw.max + Math.random() * (100 - sw.max));
+      const scored = isScored(cpuP, posIdx);
+      showFlash(scored);
+      animateShot(posIdx, scored, () => {
         state.shots.O.push(scored ? 1 : 0);
         renderLocalGame();
-        if (state.shots.O.length < limit) setTimeout(doOne, 900);
-        else { setTimeout(checkLocalWinner, 400); }
+        setTimeout(doOne, 900);
       });
     };
     doOne();
@@ -665,17 +702,12 @@
 
   function checkLocalWinner() {
     const state = localState;
-    const myScore = state.shots.X.reduce((a,b) => a+b, 0);
-    const cpuScore = state.shots.O.reduce((a,b) => a+b, 0);
-
-    if (myScore === cpuScore && !state.overtime) {
-      // Overtime!
-      state.overtime = true;
-      state.phase = 'overtime_X';
-      state.shots.X = [];
-      state.shots.O = [];
-      renderLocalGame();
-      return;
+    const xs = state.shots.X.reduce((a,b)=>a+b,0);
+    const os = state.shots.O.reduce((a,b)=>a+b,0);
+    if (xs === os && !state.overtime) {
+      state.overtime = true; state.phase = 'overtime_X';
+      state.shots.X = []; state.shots.O = [];
+      renderLocalGame(); return;
     }
     state.phase = 'done';
     renderLocalGame();
@@ -684,52 +716,41 @@
   function renderLocalGame() {
     const state = localState;
     if (!state) return;
-
-    const myScore = state.shots.X.reduce((a,b) => a+b, 0);
-    const cpuScore = state.shots.O.reduce((a,b) => a+b, 0);
-    const limit = state.overtime ? OVERTIME_SHOTS : TOTAL_SHOTS;
+    const xs = state.shots.X.reduce((a,b)=>a+b,0);
+    const os = state.shots.O.reduce((a,b)=>a+b,0);
+    const limit = state.overtime ? SHOTS_PER_POS : SHOTS_PER_POS * 3;
     const isMyTurn = state.phase === 'X_shooting' || state.phase === 'overtime_X';
     const isCpuTurn = state.phase === 'O_shooting' || state.phase === 'overtime_O';
     const isDone = state.phase === 'done';
 
-    document.getElementById('score-me').textContent = myScore;
-    document.getElementById('score-opp').textContent = cpuScore;
+    document.getElementById('score-me').textContent = xs;
+    document.getElementById('score-opp').textContent = os;
     document.getElementById('shots-me').textContent = `${state.shots.X.length}/${limit}`;
     document.getElementById('shots-opp').textContent = `${state.shots.O.length}/${limit}`;
-
     document.getElementById('score-card-me').classList.toggle('active', isMyTurn);
     document.getElementById('score-card-opp').classList.toggle('active', isCpuTurn);
 
-    const phaseEl = document.getElementById('phase-label');
-    if (state.overtime) phaseEl.textContent = '⚡ הארכה!';
-    else phaseEl.textContent = '';
-
-    // Dots
-    renderDots(state.shots.X, limit, isMyTurn && !isDone);
+    const posIdx = state.overtime ? 1 : getPosIndex(isMyTurn ? state.shots.X.length : state.shots.O.length);
+    currentPos = posIdx;
+    updatePositionBar(state.shots.X, state.overtime, isMyTurn || isDone);
+    drawCourt(posIdx, false);
 
     const statusEl = document.getElementById('status-area');
-    const nextBtn = document.getElementById('next-btn');
     const shotBtn = document.getElementById('shot-btn');
+    const nextBtn = document.getElementById('next-btn');
 
     if (isDone) {
-      if (myScore > cpuScore) {
-        statusEl.innerHTML = '<div class="status-win">🏆 ניצחת! המחשב ימשיך לחלום 😴</div>';
-      } else if (cpuScore > myScore) {
-        statusEl.innerHTML = '<div class="status-lose">😔 המחשב ניצח! תמשיך לחלום 😴</div>';
-      } else {
-        statusEl.innerHTML = '<div class="status-win">🤝 תיקו!</div>';
-      }
-      nextBtn.textContent = '🔄 משחק חדש';
-      nextBtn.style.display = 'block';
-      shotBtn.disabled = true;
+      if (xs > os) statusEl.innerHTML = '<div class="status-win">🏆 ניצחת! המחשב ימשיך לחלום 😴</div>';
+      else if (os > xs) statusEl.innerHTML = '<div class="status-lose">😔 המחשב ניצח! תמשיך לחלום 😴</div>';
+      else statusEl.innerHTML = '<div class="status-win">🤝 תיקו!</div>';
+      shotBtn.disabled = true; nextBtn.textContent = '🔄 משחק חדש'; nextBtn.style.display = 'block';
     } else if (isMyTurn) {
-      statusEl.innerHTML = '<div class="status-pill">👆 החזק וזרוק!</div>';
-      shotBtn.disabled = false;
-      nextBtn.style.display = 'none';
+      const pos = state.overtime ? 'מרכז (הארכה)' : POSITIONS[posIdx];
+      statusEl.innerHTML = `<div class="status-pill">📍 ${pos} — החזק וזרוק!</div>`;
+      shotBtn.disabled = false; nextBtn.style.display = 'none';
     } else {
       statusEl.innerHTML = '<div class="status-pill">🤖 המחשב זורק...</div>';
-      shotBtn.disabled = true;
-      nextBtn.style.display = 'none';
+      shotBtn.disabled = true; nextBtn.style.display = 'none';
     }
   }
 
@@ -738,130 +759,123 @@
     const snap = await get(ref(db, `rooms3/${roomCode}/game`));
     const state = snap.val() || newGameState();
     const phase = state.phase;
-    const isMyPhase = (myRole === 'X' && (phase === 'X_shooting' || phase === 'overtime_X')) ||
-                      (myRole === 'O' && (phase === 'O_shooting' || phase === 'overtime_O'));
-    if (!isMyPhase) return;
+    const isMyPhase = (myRole==='X' && (phase==='X_shooting'||phase==='overtime_X')) ||
+                      (myRole==='O' && (phase==='O_shooting'||phase==='overtime_O'));
+    if (!isMyPhase || shooting) return;
 
-    const shots = state.shots || { X: [], O: [] };
-    if (!Array.isArray(shots.X)) shots.X = Object.values(shots.X || {});
-    if (!Array.isArray(shots.O)) shots.O = Object.values(shots.O || {});
+    const shots = state.shots || { X:[], O:[] };
+    const myArr = Array.isArray(shots[myRole]) ? shots[myRole] : Object.values(shots[myRole]||{});
+    const limit = state.overtime ? SHOTS_PER_POS : SHOTS_PER_POS * 3;
+    if (myArr.length >= limit) return;
 
-    const limit = state.overtime ? OVERTIME_SHOTS : TOTAL_SHOTS;
-    if (shots[myRole].length >= limit) return;
+    const posIdx = state.overtime ? 1 : getPosIndex(myArr.length);
+    const scored = isScored(p, posIdx);
 
-    const scored = isScored(p);
-    animateBall(scored, async () => {
-      shots[myRole].push(scored ? 1 : 0);
+    shooting = true;
+    showFlash(scored);
+    animateShot(posIdx, scored, async () => {
+      shooting = false;
+      myArr.push(scored ? 1 : 0);
+      shots[myRole] = myArr;
+
       let newPhase = phase;
-
-      if (shots[myRole].length >= limit) {
+      if (myArr.length >= limit) {
+        const xArr = Array.isArray(shots.X) ? shots.X : Object.values(shots.X||{});
+        const oArr = Array.isArray(shots.O) ? shots.O : Object.values(shots.O||{});
         if (phase === 'X_shooting') newPhase = 'O_shooting';
         else if (phase === 'O_shooting') {
-          const xs = shots.X.reduce((a,b)=>a+b,0);
-          const os = shots.O.reduce((a,b)=>a+b,0);
+          const xs = xArr.reduce((a,b)=>a+b,0), os = oArr.reduce((a,b)=>a+b,0);
           if (xs === os) { newPhase = 'overtime_X'; shots.X = []; shots.O = []; state.overtime = true; }
           else newPhase = 'done';
         }
         else if (phase === 'overtime_X') newPhase = 'overtime_O';
         else if (phase === 'overtime_O') newPhase = 'done';
       }
-
-      await update(ref(db, `rooms3/${roomCode}/game`), { shots, phase: newPhase, overtime: state.overtime || false });
+      await update(ref(db, `rooms3/${roomCode}/game`), { shots, phase: newPhase, overtime: !!state.overtime });
     });
   }
 
   function renderOnlineGame(state) {
-    const shots = state.shots || { X: [], O: [] };
-    const sx = Array.isArray(shots.X) ? shots.X : Object.values(shots.X || {});
-    const so = Array.isArray(shots.O) ? shots.O : Object.values(shots.O || {});
-
-    const myShots = myRole === 'X' ? sx : so;
-    const oppShots = myRole === 'X' ? so : sx;
-    const myScore = myShots.reduce((a,b)=>a+b,0);
-    const oppScore = oppShots.reduce((a,b)=>a+b,0);
-    const limit = state.overtime ? OVERTIME_SHOTS : TOTAL_SHOTS;
-
+    const shots = state.shots || { X:[], O:[] };
+    const xArr = Array.isArray(shots.X) ? shots.X : Object.values(shots.X||{});
+    const oArr = Array.isArray(shots.O) ? shots.O : Object.values(shots.O||{});
+    const myArr = myRole==='X' ? xArr : oArr;
+    const oppArr = myRole==='X' ? oArr : xArr;
+    const myScore = myArr.reduce((a,b)=>a+b,0);
+    const oppScore = oppArr.reduce((a,b)=>a+b,0);
+    const limit = state.overtime ? SHOTS_PER_POS : SHOTS_PER_POS * 3;
     const phase = state.phase || 'X_shooting';
-    const isMyTurn = (myRole === 'X' && (phase === 'X_shooting' || phase === 'overtime_X')) ||
-                     (myRole === 'O' && (phase === 'O_shooting' || phase === 'overtime_O'));
+    const isMyTurn = (myRole==='X'&&(phase==='X_shooting'||phase==='overtime_X'))||
+                     (myRole==='O'&&(phase==='O_shooting'||phase==='overtime_O'));
     const isDone = phase === 'done';
 
     document.getElementById('score-me').textContent = myScore;
     document.getElementById('score-opp').textContent = oppScore;
-    document.getElementById('shots-me').textContent = `${myShots.length}/${limit}`;
-    document.getElementById('shots-opp').textContent = `${oppShots.length}/${limit}`;
+    document.getElementById('shots-me').textContent = `${myArr.length}/${limit}`;
+    document.getElementById('shots-opp').textContent = `${oppArr.length}/${limit}`;
     document.getElementById('score-card-me').classList.toggle('active', isMyTurn);
     document.getElementById('score-card-opp').classList.toggle('active', !isMyTurn && !isDone);
 
-    if (state.overtime) document.getElementById('phase-label').textContent = '⚡ הארכה!';
-    else document.getElementById('phase-label').textContent = '';
-
-    renderDots(myShots, limit, isMyTurn && !isDone);
+    const posIdx = state.overtime ? 1 : getPosIndex(isMyTurn ? myArr.length : oppArr.length);
+    updatePositionBar(myArr, state.overtime, isMyTurn || isDone);
+    drawCourt(posIdx, false);
 
     const statusEl = document.getElementById('status-area');
-    const nextBtn = document.getElementById('next-btn');
     const shotBtn = document.getElementById('shot-btn');
+    const nextBtn = document.getElementById('next-btn');
 
     if (isDone) {
-      if (myScore > oppScore) {
-        statusEl.innerHTML = '<div class="status-win">🏆 ניצחת! החבר ימשיך לחלום 😴</div>';
-      } else if (oppScore > myScore) {
-        statusEl.innerHTML = '<div class="status-lose">😔 הפסדת! תמשיך לחלום 😴</div>';
-      } else {
-        statusEl.innerHTML = '<div class="status-win">🤝 תיקו!</div>';
-      }
-      nextBtn.textContent = '🔄 משחק חדש';
-      nextBtn.style.display = 'block';
-      shotBtn.disabled = true;
+      if (myScore > oppScore) statusEl.innerHTML = '<div class="status-win">🏆 ניצחת! החבר ימשיך לחלום 😴</div>';
+      else if (oppScore > myScore) statusEl.innerHTML = '<div class="status-lose">😔 הפסדת! תמשיך לחלום 😴</div>';
+      else statusEl.innerHTML = '<div class="status-win">🤝 תיקו!</div>';
+      shotBtn.disabled = true; nextBtn.textContent = '🔄 משחק חדש'; nextBtn.style.display = 'block';
     } else if (isMyTurn) {
-      statusEl.innerHTML = '<div class="status-pill">👆 החזק וזרוק!</div>';
-      shotBtn.disabled = false;
-      nextBtn.style.display = 'none';
+      const pos = state.overtime ? 'מרכז (הארכה)' : POSITIONS[posIdx];
+      statusEl.innerHTML = `<div class="status-pill">📍 ${pos} — החזק וזרוק!</div>`;
+      shotBtn.disabled = false; nextBtn.style.display = 'none';
     } else {
-      const oppTurnText = (phase === 'X_shooting' || phase === 'overtime_X') ? '🍓' : '🍋';
-      statusEl.innerHTML = `<div class="status-pill">⏳ ${oppTurnText} זורק...</div>`;
-      shotBtn.disabled = true;
-      nextBtn.style.display = 'none';
+      statusEl.innerHTML = '<div class="status-pill">⏳ היריב זורק...</div>';
+      shotBtn.disabled = true; nextBtn.style.display = 'none';
     }
   }
 
-  function renderDots(shots, limit, showCurrent) {
-    const el = document.getElementById('shots-dots');
-    el.innerHTML = '';
-    for (let i = 0; i < limit; i++) {
-      const dot = document.createElement('div');
-      dot.className = 'dot';
-      if (i < shots.length) {
-        dot.classList.add(shots[i] ? 'scored' : 'missed');
-      } else if (i === shots.length && showCurrent) {
-        dot.classList.add('current');
+  function updatePositionBar(myShots, overtime, showMine) {
+    if (overtime) {
+      [0,1,2].forEach(i => {
+        const el = document.getElementById(`pos-${i}`);
+        el.className = 'pos-item' + (i===1 ? ' active' : ' done');
+      });
+      return;
+    }
+    [0,1,2].forEach(i => {
+      const el = document.getElementById(`pos-${i}`);
+      const start = i * SHOTS_PER_POS;
+      const posShots = showMine ? myShots.slice(start, start + SHOTS_PER_POS) : [];
+      const shotsInPos = myShots.length - start;
+      const isCurrent = showMine && shotsInPos >= 0 && shotsInPos < SHOTS_PER_POS;
+      const isDone = myShots.length > (i+1) * SHOTS_PER_POS - 1;
+      el.className = 'pos-item' + (isCurrent && showMine && myShots.length < (i+1)*SHOTS_PER_POS ? ' active' : '') + (isDone ? ' done' : '');
+
+      const dotsEl = document.getElementById(`dots-${i}`);
+      dotsEl.innerHTML = '';
+      for (let j = 0; j < SHOTS_PER_POS; j++) {
+        const dot = document.createElement('div');
+        dot.className = 'pos-dot';
+        if (j < posShots.length) dot.classList.add(posShots[j] ? 'in' : 'out');
+        else if (j === posShots.length && isCurrent && showMine) dot.classList.add('cur');
+        dotsEl.appendChild(dot);
       }
-      el.appendChild(dot);
-    }
+    });
   }
 
-  // ─── Ball animation ───
-  function animateBall(scored, cb) {
-    if (shooting) return;
-    shooting = true;
-    const ball = document.getElementById('ball');
-    ball.className = 'ball ' + (scored ? 'shooting' : 'missed');
-
-    // Flash result
+  function showFlash(scored) {
     const flash = document.createElement('div');
     flash.className = 'result-flash ' + (scored ? 'scored' : 'missed-txt');
     flash.textContent = scored ? 'נכנס! 🎯' : 'פספוס!';
     document.body.appendChild(flash);
     setTimeout(() => flash.remove(), 1000);
-
-    setTimeout(() => {
-      ball.className = 'ball';
-      shooting = false;
-      if (cb) cb();
-    }, 750);
   }
 
-  // ─── Next round ───
   window.nextRound = async function() {
     if (vsComputer) {
       localState = newGameState();
@@ -869,17 +883,12 @@
       document.getElementById('next-btn').style.display = 'none';
       renderLocalGame();
     } else {
-      const state = newGameState();
-      await update(ref(db, `rooms3/${roomCode}`), { game: state, emoji: null });
+      await update(ref(db, `rooms3/${roomCode}`), { game: newGameState(), emoji: null });
     }
   };
 
-  // ─── Emoji ───
   window.sendEmoji = async function(emoji) {
-    if (vsComputer) {
-      showEmojiBubble(emoji, true);
-      return;
-    }
+    if (vsComputer) { showEmojiBubble(emoji, true); return; }
     await update(ref(db, `rooms3/${roomCode}/emoji`), { value: emoji, from: myRole, ts: Date.now() });
   };
 
@@ -898,7 +907,6 @@
     setTimeout(() => el.remove(), 2500);
   }
 
-  // ─── Leave ───
   window.leaveRoom = async function() {
     if (unsubscribe) { unsubscribe(); unsubscribe = null; }
     if (roomCode) { await remove(ref(db, `rooms3/${roomCode}`)); roomCode = null; }
@@ -909,7 +917,7 @@
     show('lobby');
   };
 
-  // ─── Auto-join ───
+  // Auto-join
   (async function() {
     const params = new URLSearchParams(location.search);
     const roomParam = params.get('room');
@@ -919,13 +927,13 @@
     if (!snap.exists()) { errEl.textContent = 'חדר לא נמצא'; history.replaceState({}, '', location.pathname); return; }
     if (snap.val().status !== 'waiting') { errEl.textContent = 'החדר כבר מלא'; history.replaceState({}, '', location.pathname); return; }
     await update(ref(db, `rooms3/${roomParam}`), { status: 'playing' });
-    roomCode = roomParam;
-    myRole = 'O';
+    roomCode = roomParam; myRole = 'O';
     history.replaceState({}, '', location.pathname);
-    show('game');
-    initOnlineUI();
-    listenRoom();
+    show('game'); initOnlineUI(); listenRoom();
   })();
+
+  // Init court on load
+  drawCourt(0, false);
 </script>
 </body>
 </html>
