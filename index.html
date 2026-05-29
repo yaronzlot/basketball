@@ -780,8 +780,8 @@
     const nextBtn = document.getElementById('next-btn');
 
     if (isDone) {
-      if (xs > os) statusEl.innerHTML = '<div class="status-win">🏆 ניצחת! המחשב ימשיך לחלום 😴</div>';
-      else if (os > xs) statusEl.innerHTML = '<div class="status-lose">😔 המחשב ניצח! תמשיך לחלום 😴</div>';
+      if (xs > os) statusEl.innerHTML = '<div class="status-win">🏆 סטף קרי חיוור לעומתך!</div>';
+      else if (os > xs) statusEl.innerHTML = '<div class="status-lose">😔 לך תתאמן....</div>';
       else statusEl.innerHTML = '<div class="status-win">🤝 תיקו!</div>';
       shotBtn.disabled = true; nextBtn.textContent = '🔄 משחק חדש'; nextBtn.style.display = 'block';
     } else if (isMyTurn) {
@@ -867,8 +867,8 @@
     const nextBtn = document.getElementById('next-btn');
 
     if (isDone) {
-      if (myScore > oppScore) statusEl.innerHTML = '<div class="status-win">🏆 ניצחת! החבר ימשיך לחלום 😴</div>';
-      else if (oppScore > myScore) statusEl.innerHTML = '<div class="status-lose">😔 הפסדת! תמשיך לחלום 😴</div>';
+      if (myScore > oppScore) statusEl.innerHTML = '<div class="status-win">🏆 סטף קרי חיוור לעומתך!</div>';
+      else if (oppScore > myScore) statusEl.innerHTML = '<div class="status-lose">😔 לך תתאמן....</div>';
       else statusEl.innerHTML = '<div class="status-win">🤝 תיקו!</div>';
       shotBtn.disabled = true; nextBtn.textContent = '🔄 משחק חדש'; nextBtn.style.display = 'block';
     } else if (isMyTurn) {
