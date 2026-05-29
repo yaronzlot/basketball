@@ -107,15 +107,15 @@
       display: flex; gap: 10px; width: 100%; margin-bottom: 8px;
     }
     .score-card {
-      flex: 1; background: #1a1a2e; border-radius: 14px;
-      padding: 8px 6px; text-align: center;
+      flex: 1; background: #1a1a2e; border-radius: 12px;
+      padding: 5px 4px; text-align: center;
       border: 1px solid rgba(255,255,255,0.06);
       transition: border-color 0.3s;
     }
-    .score-card.active { border-color: #ff6b00; box-shadow: 0 0 12px rgba(255,107,0,0.2); }
-    .score-name { font-size: 0.6rem; color: rgba(255,255,255,0.4); margin-bottom: 1px; }
-    .score-pts { font-family: 'Bebas Neue', cursive; font-size: 1.8rem; color: white; line-height: 1; }
-    .score-shots { font-size: 0.55rem; color: rgba(255,255,255,0.3); margin-top: 1px; }
+    .score-card.active { border-color: #ff6b00; box-shadow: 0 0 10px rgba(255,107,0,0.2); }
+    .score-name { font-size: 0.55rem; color: rgba(255,255,255,0.4); margin-bottom: 0; }
+    .score-pts { font-family: 'Bebas Neue', cursive; font-size: 1.4rem; color: white; line-height: 1; }
+    .score-shots { font-size: 0.5rem; color: rgba(255,255,255,0.3); margin-top: 0; }
 
     /* Position indicator */
     .position-bar {
@@ -170,7 +170,7 @@
     /* ─── COURT ─── */
     .court-wrap { width: 100%; position: relative; margin-bottom: 10px; }
 
-    canvas#court { width: 100%; border-radius: 18px; display: block; }
+    canvas#court { width: 100%; border-radius: 18px; display: block; max-height: 420px; }
 
     /* Power bar */
     .power-section { width: 100%; margin-bottom: 8px; }
@@ -319,7 +319,7 @@
 
   <!-- Court canvas -->
   <div class="court-wrap">
-    <canvas id="court" width="400" height="320"></canvas>
+    <canvas id="court" width="400" height="380"></canvas>
   </div>
 
   <div class="power-section">
@@ -394,8 +394,8 @@
   let ballX = 200, ballY = 240, ballSize = 28;
   let currentPos = 0; // 0=left,1=center,2=right
 
-  const BALL_START_X = [100, 200, 300];
-  const BALL_START_Y = 260;
+  const BALL_START_X = [59, 200, 341];
+  const BALL_START_Y = [151, 210, 151];
 
   function drawCourt(posIdx, animBall) {
     const W = canvas.width, H = canvas.height;
@@ -477,7 +477,7 @@
       drawBall(ballX, ballY, ballSize);
     } else {
       const bx = BALL_START_X[posIdx];
-      drawBall(bx, BALL_START_Y, 28);
+      drawBall(bx, Array.isArray(BALL_START_Y) ? BALL_START_Y[posIdx] : BALL_START_Y, 28);
     }
   }
 
@@ -504,7 +504,7 @@
   function animateShot(posIdx, scored, cb) {
     if (ballAnim) cancelAnimationFrame(ballAnim);
     const startX = BALL_START_X[posIdx];
-    const startY = BALL_START_Y;
+    const startY = Array.isArray(BALL_START_Y) ? BALL_START_Y[posIdx] : BALL_START_Y;
     const rimX = canvas.width / 2;
     const rimY = 50;
     let t = 0;
