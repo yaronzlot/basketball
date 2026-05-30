@@ -184,7 +184,7 @@
     .power-fill {
       height: 100%; width: 0%; border-radius: 8px;
       background: #e74c3c;
-      transition: width 0.04s linear;
+      transition: width 0.03s linear;
     }
     .sweet-zone {
       position: absolute; top: 0; height: 100%; border-radius: 4px;
@@ -330,7 +330,7 @@
   </div>
 
   <div class="power-section">
-    <div class="power-label">עצמה — תפסיק בירוק!</div>
+    <div class="power-label">שחרר כשהסרגל מגיע לירוק! 🎯</div>
     <div class="power-track"><div class="sweet-zone" id="sweet-zone"></div><div class="power-fill" id="power-fill"></div></div>
   </div>
 
@@ -395,7 +395,7 @@
   let sweetPos = 30; // current sweet zone left %
   let sweetDir = 1;  // direction of movement
   let sweetInterval = null;
-  const SWEET_WIDTH = 18; // zone width in %
+  const SWEET_WIDTH = 12; // zone width in % — narrow!
 
   function startSweetZone() {
     stopSweetZone();
@@ -404,12 +404,12 @@
     const el = document.getElementById('sweet-zone');
     if (el) { el.style.width = SWEET_WIDTH + '%'; el.style.left = sweetPos + '%'; }
     sweetInterval = setInterval(() => {
-      sweetPos += sweetDir * 1.8;
+      sweetPos += sweetDir * 2.8;
       if (sweetPos <= 0) { sweetPos = 0; sweetDir = 1; }
       if (sweetPos + SWEET_WIDTH >= 100) { sweetPos = 100 - SWEET_WIDTH; sweetDir = -1; }
       const el = document.getElementById('sweet-zone');
       if (el) el.style.left = sweetPos + '%';
-    }, 40);
+    }, 35);
   }
 
   function stopSweetZone() {
@@ -670,9 +670,11 @@
     document.getElementById('power-fill').style.width = '0%';
     chargeInterval = setInterval(() => {
       if (!charging) return;
-      power = Math.min(power + 2.5, 100);
+      power = Math.min(power + 4, 100);
       document.getElementById('power-fill').style.width = power + '%';
-    }, 50);
+      // Auto release at 100
+      if (power >= 100) { releaseShot(); }
+    }, 40);
   };
 
   window.releaseShot = function(e) {
